@@ -1,6 +1,11 @@
 function rentalCarCost(days) {
-  var discount = (days <= 2) ? 0 : ((days >= 7 ) ? 50 : 20 );
-  return (days * 40) - discount;
+  if (days >= 7) {
+    return (days * 40) - 50;
+  } else if (days >= 3) {
+    return (days * 40) - 20;
+  } else {
+    return (days * 40)
+  }
 }
 
 //http://www.codewars.com/kata/transportation-on-vacation

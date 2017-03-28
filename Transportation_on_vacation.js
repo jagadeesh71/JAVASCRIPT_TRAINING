@@ -1,3 +1,4 @@
+//which one is a good choice among these two -- switch case or if-else-if
 function rentalCarCost(days) {
   if (days >= 7) {
     return (days * 40) - 50;

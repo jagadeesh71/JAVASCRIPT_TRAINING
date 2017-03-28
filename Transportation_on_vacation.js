@@ -1,6 +1,7 @@
 //which one is a good choice among these two -- switch case or if-else-if
 function rentalCarCost(days) {
-  var cost = days * 40, discount;
+  var cost = days * 40, 
+      discount;
   if (days >= 7) {
     discount = 50;
   } else if (days >= 3) {

@@ -1,5 +1,17 @@
 //I completed the task in two ways , could you please tell which one is efficient ??
 
+var OPERATORS = {
+'+': function(value1, value2) {
+    return value1 + value2;
+  }
+};
+
+function basicOp(operation, val1, val2) {
+  var operationFunc = OPERATORS[operation];
+  retun operationFunc(val1,val2);
+}
+
+
 function basicOp(operation, value1, value2) {
   var listOfOperations = {
       '+': value1 + value2,

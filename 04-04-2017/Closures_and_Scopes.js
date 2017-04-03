@@ -1,12 +1,12 @@
 function createFunctions(n) {
   var callbacks = [];
-  function returnNumber (value) {
+  function returnActualNumber (value) {
     return function () {
       return value;
     };
   }
   for (var i=0; i<n; i++) {
-    callbacks.push(returnNumber(i));
+    callbacks.push(returnActualNumber(i));
   }
   return callbacks;
 }

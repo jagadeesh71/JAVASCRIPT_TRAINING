@@ -68,6 +68,7 @@ function partitionOn(pred, items) {
        items.splice(index, 1);
     }
   }
+return i;
 }
 
 

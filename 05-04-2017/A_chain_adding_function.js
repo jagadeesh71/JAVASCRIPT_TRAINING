@@ -1,11 +1,11 @@
-var add = function(arg) {
-    var a = 0;
-    F =  function (arg){
-        a = a + arg;
-        console.log(a);
+var add = function(integer) {
+    var startingValue = 0;
+    F =  function (intergerValue){
+        startingValue += intergerValue;
+        console.log(startingValue);
         return F;
     }
-    return F(arg);
+    return F(integer);
 };
 
 //http://www.codewars.com/kata/a-chain-adding-function/train/javascript

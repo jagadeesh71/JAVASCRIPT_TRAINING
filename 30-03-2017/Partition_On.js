@@ -58,9 +58,9 @@ function partitionOn(pred, items) {
 //with a condition. My code will run into infinite loop.
 
 function partitionOn(pred, items) {
-  var i = 0;
+  var i = 0,index = 0;
   while(index < items.length) {  // I dont know what condition i want to keep ,
-    if(!pred(items[i]) {
+    if(!pred(items[index]) {
       index++;
       i++;
     } else {

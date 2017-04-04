@@ -7,3 +7,5 @@ var add = function(arg) {
     }
     return F(arg);
 };
+
+//http://www.codewars.com/kata/a-chain-adding-function/train/javascript

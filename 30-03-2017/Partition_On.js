@@ -59,7 +59,7 @@ function partitionOn(pred, items) {
 
 function partitionOn(pred, items) {
   var i = 0,index = 0;
-  while(index < items.length) {  // I dont know what condition i want to keep ,
+  while(index < items.length) {  // I dont know what condition i need to keep to work,
     if(!pred(items[index]) {
       index++;
       i++;

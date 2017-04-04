@@ -1,4 +1,4 @@
-//I have seen a different variant of doing this using apply at 14 instead of using two for loops. What it 
+//1.I have seen a different variant of doing this using apply at 14 instead of using two for loops. What it 
 //will exactly do and for what purpose we can use apply.
 function partitionOn(pred, items) {
   var evenNumbers = items.filter(pred);
@@ -17,10 +17,10 @@ function partitionOn(pred, items) {
 }
 
 
-//1. In line 9 AND 12 ,I declared variables item and index with the keyword var right? my quesition is will the scope of item and index be 
+//2. In line 9 AND 12 ,I declared variables item and index with the keyword var right? my quesition is will the scope of item and index be 
 //available through out the function or just for the for loop??
 
-//2. here is the another variant of above problem using temperory array. Is it good way to do like this.
+//3. here is the another variant of above problem using temperory array. Is it good way to do like this.
 function partitionOn(pred, items) {
   var i = 0,tempArray=[];
   for (var index = 0; index < items.length; index++) {
@@ -38,7 +38,7 @@ function partitionOn(pred, items) {
   return i;
 }
 
-//3. I have an approch to do this problem in a different way but i couldn't be able to write logic. please let me know is it possible
+//4. I have an approch to do this problem in a different way but i couldn't be able to write logic. please let me know is it possible
 //to do like that.
 
 //here is my idea . I have taken a array which is like [1,2,3,4,5,6]

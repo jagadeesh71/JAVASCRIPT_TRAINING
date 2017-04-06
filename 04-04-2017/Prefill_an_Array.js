@@ -1,10 +1,10 @@
 
 function prefill(n, v) {
-  var i = 1,arrayList = [],
+  var index = 1,arrayList = [],
     pushElement = function () {
-      if (i <= parseInt(n, 10)) {
+      if (index <= parseInt(n, 10)) {
         arrayList.push(v);
-        i++;
+        index++;
         return arrayList = pushElement();
       } else {
         return arrayList;

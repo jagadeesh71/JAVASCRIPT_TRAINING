@@ -1,10 +1,25 @@
+//using a separate variable 
+function createSecretHolder(secret) {
+    var storeValue = secret,
+        secretObject = {
+      getSecret: function () {
+        return storeValue;
+      },
+      setSecret: function (setSecret) {
+        storeValue = setSecret;
+      }
+    }
+    return secretObject;
+};
+
+//without using separate variable
 function createSecretHolder(secret) {
     var secretObject = {
       getSecret: function () {
-        return this.secret;
+        return secret;
       },
       setSecret: function (setSecret) {
-        this.secret = setSecret;
+        secret = setSecret;
       }
     }
     return secretObject;

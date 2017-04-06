@@ -1,11 +1,10 @@
 function createSecretHolder(secret) {
     var secretObject = {
-      secretValue: secret,
       getSecret: function () {
-        return this.secretValue;
+        return this.secret;
       },
       setSecret: function (setSecret) {
-        this.secretValue = setSecret;
+        this.secret = setSecret;
       }
     }
     return secretObject;

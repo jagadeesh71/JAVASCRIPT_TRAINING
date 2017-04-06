@@ -14,7 +14,7 @@ function prefill(n, v) {
   
   if (n === 0) {
     return arrayList;
-  } else if (isNaN(n) || n < 0 || typeof(n) === "boolean" || n % 1 !== 0) { // shall i use regular expression for all these validations ??
+  } else if (n < 0 || typeof(n) === "boolean" || n % 1 !== 0) { // shall i use regular expression for all these validations ??
     throw new TypeError(n+' is invalid');
   } else {
     return pushElement();

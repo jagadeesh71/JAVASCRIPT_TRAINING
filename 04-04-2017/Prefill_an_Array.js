@@ -1,7 +1,7 @@
 
 function prefill(n, v) {
   var i = 1,arrayList = [],
-      pushElement = function () {
+    pushElement = function () {
       if (i <= parseInt(n, 10)) {
         arrayList.push(v);
         i++;
@@ -10,6 +10,8 @@ function prefill(n, v) {
         return arrayList;
       }
     };
+  
+  
   if (n === 0) {
     return arrayList;
   } else if (isNaN(n) || n < 0 || typeof(n) === "boolean" || n % 1 !== 0) {

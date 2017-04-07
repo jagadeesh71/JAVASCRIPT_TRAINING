@@ -54,18 +54,14 @@ function partitionOn(pred, items) {
 // 1 3 5 6 2 4   --> increment index = 3
 // 1 3 5 6 2 4 6 --> 1 3 5 2 4 6 (pushing to last and splicing it)
 
-//But i am facing problem with while loop condition , now the index is 3 but the desired list is already created . i want to terminate it 
-//with a condition. My code will run into infinite loop.
-
 function partitionOn(pred, items) {
-  var i = 0,index = 0;
-  while(index < items.length) {  // I dont know what condition i need to keep to work,
-    if(!pred(items[index]) {
-      index++;
+  var i = 0;
+  for(var index =0; index < items.length; index++) {    
+    if(!pred(items[i])) {
       i++;
     } else {
-       items.push(items[index];
-       items.splice(index, 1);
+       items.push(items[i]);
+       items.splice(i, 1);
     }
   }
 return i;

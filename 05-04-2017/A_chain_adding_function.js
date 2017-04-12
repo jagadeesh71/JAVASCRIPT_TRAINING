@@ -2,9 +2,9 @@ var add = function(integer) {
     var sum = 0,
     summate =  function (intergerValue){
         sum += intergerValue;
-        return F;
+        return summate;
     }
-    summate = function () {
+    summate.valueOf = function () {
         return sum;
     }
     return summate(integer);

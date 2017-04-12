@@ -3,3 +3,5 @@ function compose(f,g) {
     return f(g.apply(this, arguments));
   }
 }
+
+//http://www.codewars.com/kata/function-composition

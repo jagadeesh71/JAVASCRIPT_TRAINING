@@ -1,11 +1,13 @@
 var add = function(integer) {
-    var startingValue = 0;
-    F =  function (intergerValue){
-        startingValue += intergerValue;
-        console.log(startingValue);
+    var sum = 0,
+    summate =  function (intergerValue){
+        sum += intergerValue;
         return F;
     }
-    return F(integer);
+    summate = function () {
+        return sum;
+    }
+    return summate(integer);
 };
 
 //http://www.codewars.com/kata/a-chain-adding-function/train/javascript

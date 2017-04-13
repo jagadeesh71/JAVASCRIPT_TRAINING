@@ -11,11 +11,9 @@ Array.prototype.cube = function () {
 }
 
 Array.prototype.sum = function () {
-  var sum = 0;
-  this.map(function (num) {
-    sum += num;
-  });
-  return sum;
+  return this.reduce(function (total, number) {
+    return total + number;
+  },0)
 }
 
 Array.prototype.average = function () {

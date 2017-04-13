@@ -6,11 +6,9 @@ var Cat = (function () {
        if (!name || !weight) {
          throw new Error('Name and Weight are mandatory fields');
        }
-       
        var _weight = weight;
        totalWeight += weight;
        count++;
-       
        Object.defineProperty(this, 'weight', {
          get: function () {
            return _weight;
@@ -21,7 +19,6 @@ var Cat = (function () {
          }
        });
      };
-     
      Cat.averageWeight = function () {
        return totalWeight / count;
      }

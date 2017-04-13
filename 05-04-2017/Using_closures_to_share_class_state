@@ -1,25 +1,26 @@
 // Let's make a Cat constructor!
 var Cat = (function () {
- var count = 0,
-     totalWeight = 0;
-     function Cat (name, weight) {
-       if (!name || !weight) {
-         throw new Error('Name and Weight are mandatory fields');
-       }
-       totalWeight += weight;
-       count++;
-       Object.defineProperty(this, 'weight', {
-         get: function () {
-           return weight;
-         },
-         set: function (objWeight) {
-           totalWeight = totalWeight - weight + objWeight;
-           weight = objWeight;
-         }
-       });
-     };
-     Cat.averageWeight = function () {
-       return totalWeight / count || 0;
-     }
-     return Cat;
+    var count = 0,
+        totalWeight = 0;
+
+    function Cat(name, weight) {
+        if (!name || !weight) {
+            throw new Error('Name and Weight are mandatory fields');
+        }
+        totalWeight += weight;
+        count++;
+        Object.defineProperty(this, 'weight', {
+            get: function () {
+                return weight;
+            }
+            , set: function (objWeight) {
+                totalWeight = totalWeight - weight + objWeight;
+                weight = objWeight;
+            }
+        });
+    };
+    Cat.averageWeight = function () {
+        return totalWeight / count || 0;
+    }
+    return Cat;
 }());

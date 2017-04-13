@@ -12,9 +12,7 @@ function prefill(n, v) {
     };
   
   
-  if (n === 0) {
-    return arrayList;
-  } else if (n < 0 || typeof(n) === "boolean" || n % 1 !== 0) { // shall i use regular expression for all these validations ??
+ if (n < 0 || typeof(n) === "boolean" || n % 1 !== 0) {
     throw new TypeError(n+' is invalid');
   } else {
     return pushElement();

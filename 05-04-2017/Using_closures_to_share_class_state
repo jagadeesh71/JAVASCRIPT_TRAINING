@@ -1,1 +1,30 @@
 
+// Let's make a Cat constructor!
+var listOfObjects = [];
+function Cat(name, weight) {
+   if (!name || !weight) throw 'error';
+   this._weight = weight;
+   this._name = name;
+   listOfObjects.push(this);
+   Object.defineProperty(this, 'weight', {
+     get: function () {
+       return this._weight;
+     },
+     set: function (objWeight) {
+       this._weight =  objWeight;
+     }
+   });
+  };
+   Object.defineProperty(Cat, 'averageWeight', {
+     get: function () {
+       var sum = 0;
+       for (var i =0; i< listOfObjects.length; i++) {
+          sum += listOfObjects[i].weight;
+       }
+       return function () {
+         return sum/listOfObjects.length;
+       };
+      }
+   });
+   
+   //http://www.codewars.com/kata/using-closures-to-share-class-state/train/javascript

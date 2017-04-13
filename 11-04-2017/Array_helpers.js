@@ -32,3 +32,6 @@ Array.prototype.odd = function () {
     return number % 2 !== 0;
   });
 }
+
+
+//http://www.codewars.com/kata/525d50d2037b7acd6e000534/solutions/javascript

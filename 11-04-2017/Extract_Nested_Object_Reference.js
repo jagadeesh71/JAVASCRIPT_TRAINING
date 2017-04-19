@@ -3,8 +3,8 @@
 Object.prototype.hash = function(string) {
   var objProperties = string.split('.'),
       value = this,
-      noOfObjects = objProperties.length;
-  for (var i = 0; i < noOfObjects; i++) {
+      noOfProperties = objProperties.length;
+  for (var i = 0; i < noOfProperties; i++) {
     value = value[objProperties[i]];
     if(!value) { 
       return value;

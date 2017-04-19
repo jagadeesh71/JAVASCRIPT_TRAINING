@@ -2,8 +2,9 @@
 // otherwise return undefined
 Object.prototype.hash = function(string) {
   var objProperties = string.split('.'),
-      value = this;
-  for (var i = 0; i < objProperties.length; i++) {
+      value = this,
+      noOfObjects = objProperties.length;
+  for (var i = 0; i < noOfObjects; i++) {
     value = value[objProperties[i]];
     if(!value) { 
       return value;

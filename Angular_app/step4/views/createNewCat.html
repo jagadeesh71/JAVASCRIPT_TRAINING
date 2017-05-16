@@ -1,0 +1,48 @@
+    <a href="#/">Back</a>
+    <div class="panel panel-default panel-dimentions" ng-controller="createCatController as createCtrl">
+        <div class="panel-heading">Add New Cat</div>
+        <div class="panel-body">
+            <form name="myForm">
+                <div class="row" ng-class="{ 'has-error' : (myForm.catName.$invalid && !myForm.catName.$pristine) || createCtrl.isDuplicate }">
+                    <div class="col-xs-3">
+                        <label class="pull-right">Cat Name:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <input type="text" placeholder="Enter cat name" name="catName" ng-model="createCtrl.catObj.name" ng-change="createCtrl.duplicateNameExists(createCtrl.catObj)" class="form-control" required>
+                        <p ng-show="myForm.catName.$invalid && !myForm.catName.$pristine" class="help-block">Cat name is required.</p>
+                        <p ng-show="createCtrl.isDuplicate" class="help-block">Cat name already exists.</p>
+                    </div>
+                </div>
+                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.description.$invalid && !myForm.description.$pristine }">
+                    <div class="col-xs-3">
+                        <label class="pull-right">Cat Description:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <textarea type="text" placeholder="Enter cat description" name="description" ng-model="createCtrl.catObj.description" class="form-control" ng-minlength="3" ng-maxlength="180"></textarea>
+                        <p ng-show="myForm.description.$error.minlength" class="help-block">Description is too short.</p>
+                        <p ng-show="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
+                    </div>
+                </div>
+                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine }">
+                    <div class="col-xs-3">
+                        <label class="pull-right">Cat Image URL:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this.files,1)">
+                        <div class="bootstrap-filestyle input-group">
+                            <input type="text" class="form-control file-upload" placeholder="Image" name="imageUrl" ng-model="createCtrl.catObj.src" required> <span class="group-span-filestyle input-group-btn" tabindex="0">
+                    <label for="filestyle-3" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span> </label>
+                            </span>
+                        </div>
+                        <p ng-show="myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
+                    </div>
+                </div>
+            </form>
+            <div class="footer-css">
+                <button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid || createCtrl.isDuplicate" ng-click="createCtrl.saveCatDetails(createCtrl.catObj)">Save</button>
+                <button type="button" class="btn btn-default">Reset</button>
+            </div>
+        </div>
+    </div>
+    

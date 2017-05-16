@@ -70,3 +70,16 @@ input[type=file] {
     position: absolute; 
     clip: rect(0 0 0 0);
 }
+.panel-dimentions {
+    width: 55%;
+    margin-left: 25%;
+}
+
+.footer-css {
+    margin-top: 15px;
+    float: right;
+}
+
+.glyphicon-edit {
+    cursor: pointer;
+}

@@ -3,11 +3,11 @@
             
     function configuration($routeProvider){
         $routeProvider
-        .when("/", {
-            templateUrl: "index.html"
+        .when('/', {
+            templateUrl: './views/catList.html'
         })
-        .when("/addCat", {
-            templateUrl: "createNewCat.html"
+        .when('/addCat', {
+            templateUrl: './views/createNewCat.html'
         });
     }
 })();

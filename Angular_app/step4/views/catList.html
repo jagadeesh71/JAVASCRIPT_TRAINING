@@ -1,0 +1,116 @@
+<div ng-controller="catController as catCtrl">
+        
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="margin-bottom-2">
+                    <input type="text" placeholder="search" ng-model="searchedName" class="width-height"> </div>
+                <div class="margin-bottom-2">
+                    <select ng-model="sort" class="width-height">
+                        <option value="" selected>Select sorting</option>
+                        <option value='name'>Ascending</option>
+                        <option value='-name'>Descending</option>
+                    </select>
+                </div>
+                <div class="row margin-bottom-2">
+                    <div class="col-xs-6">
+                        <label>Cat List</label>
+                    </div>
+                    <div class="col-xs-6"> 
+                        <a href="#addCat" class="pull-right">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a> 
+                    </div>
+                </div>
+                <div ng-repeat="cat in catCtrl.catList | myCustomFilter:searchedName | orderBy:sort"> 
+                    <span class="glyphicon glyphicon-chevron-right"></span> 
+                    <a ng-click="catCtrl.getFirstCatDetails(cat)" ng-model="name" ng-class="{active_anchor: (cat.id == catCtrl.selectedCat)}">
+                        {{cat.name}}
+                    </a> 
+                    <span ng-if="cat.isClicked">&#10004;</span> 
+                    <span class="pull-right" ng-click="catCtrl.loadCatDetails(cat)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </span> 
+                </div>
+                <div class="col-xs-9" ng-if="catCtrl.catList.length === 0">
+                    <i>List is empty</i>
+                </div>
+            </div>
+            
+            <div class="panel panel-default col-xs-9" ng-if="catCtrl.catData && catCtrl.catList.length">
+                <div class="panel-body">
+                    <div class="row">
+                        <a class="pull-right" ng-click="catCtrl.deleteCat(catCtrl.catData)"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                    <div class="col-xs-4"> <img ng-src={{catCtrl.catData.src}} class="img-responsive" ng-click="catCtrl.incrementCount(catCtrl.catData)" /> </div>
+                    <div class="col-xs-8">
+                        <div class="row margin-left-2 margin-top-1">
+                            <label>Name:</label> <span ng-bind="catCtrl.catData.name"></span> </div>
+                        <div class="row margin-left-2 margin-top-1">
+                            <label>Description:</label> <span ng-bind="catCtrl.catData.description"></span> </div>
+                        <div class="row margin-left-2 margin-top-1">
+                            <label>No of clicks: </label> <span ng-bind="catCtrl.catData.clickCount"></span> </div>
+                        <div class="row margin-left-2 margin-top-1">
+                            <label>Votes:</label>
+                            <input type="number" ng-model="catCtrl.catData.votes" ng-change="storeAsCookie()"/> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        <div class="modal fade" id="editCatDetails" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Edit Cat details</h4> </div>
+                        <div class="modal-body">
+                            <form name="myForm">
+
+                                <div class="row" ng-class="{ 'has-error' : (myForm.catName.$invalid && !myForm.catName.$pristine) || catCtrl.isDuplicate }">
+                                    <div class="col-xs-3">
+                                        <label class="pull-right">Cat Name:</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="text" placeholder="Enter cat name" name="catName" ng-model="catCtrl.catObj.name" ng-change="catCtrl.duplicateNameExists(catCtrl.catObj)" class="form-control" required>
+                                        <p ng-show="myForm.catName.$invalid && !myForm.catName.$pristine" class="help-block">Cat name is required.</p>
+                                        <p ng-show="catCtrl.isDuplicate" class="help-block">Cat name already exists.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.description.$invalid && !myForm.description.$pristine }">
+                                    <div class="col-xs-3">
+                                        <label class="pull-right">Cat Description:</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <textarea type="text" placeholder="Enter cat description" name="description" ng-model="catCtrl.catObj.description" class="form-control" ng-minlength="3" ng-maxlength="180"></textarea>
+                                        <p ng-show="myForm.description.$error.minlength" class="help-block">Description is too short.</p>
+                                        <p ng-show="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine }">
+                                    <div class="col-xs-3">
+                                        <label class="pull-right">Cat Image URL:</label>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this.files,1)">
+                                        <div class="bootstrap-filestyle input-group">
+                                            <input type="text" class="form-control file-upload" placeholder="Image" name="imageUrl" ng-model="catCtrl.catObj.src" required> <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                            <label for="filestyle-3" class="btn btn-primary">
+                                                <span class="glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span>
+                                            </label>
+                                            </span>
+                                        </div>
+                                        <p ng-show="myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer"> 
+                            <button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid || catCtrl.isDuplicate" ng-click="catCtrl.editCatDetails(catCtrl.catObj)" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                </div>
+            </div>  
+        </div>
+    </div>

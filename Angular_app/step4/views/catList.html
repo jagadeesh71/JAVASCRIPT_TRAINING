@@ -27,9 +27,9 @@
                         {{cat.name}}
                     </a> 
                     <span ng-if="cat.isClicked">&#10004;</span> 
-                    <span class="pull-right" ng-click="catCtrl.loadCatDetails(cat)">
+                    <a class="pull-right" ng-click="catCtrl.loadCatDetails(cat)">
                         <span class="glyphicon glyphicon-edit"></span>
-                    </span> 
+                    </a> 
                 </div>
                 <div class="col-xs-9" ng-if="catCtrl.catList.length === 0">
                     <i>List is empty</i>
@@ -41,7 +41,7 @@
                     <div class="row">
                         <a class="pull-right" ng-click="catCtrl.deleteCat(catCtrl.catData)"><span class="glyphicon glyphicon-remove"></span></a>
                     </div>
-                    <div class="col-xs-4"> <img ng-src={{catCtrl.catData.src}} class="img-responsive" ng-click="catCtrl.incrementCount(catCtrl.catData)" /> </div>
+                    <div class="col-xs-4"> <img ng-src={{catCtrl.catData.absolutePath}} class="img-responsive" ng-click="catCtrl.incrementCount(catCtrl.catData)" /> </div>
                     <div class="col-xs-8">
                         <div class="row margin-left-2 margin-top-1">
                             <label>Name:</label> <span ng-bind="catCtrl.catData.name"></span> </div>
@@ -51,7 +51,7 @@
                             <label>No of clicks: </label> <span ng-bind="catCtrl.catData.clickCount"></span> </div>
                         <div class="row margin-left-2 margin-top-1">
                             <label>Votes:</label>
-                            <input type="number" ng-model="catCtrl.catData.votes" ng-change="storeAsCookie()"/> </div>
+                            <input type="number" ng-model="catCtrl.catData.votes" ng-change="catCtrl.upVote()"/> </div>
                     </div>
                 </div>
             </div>
@@ -93,21 +93,24 @@
                                         <label class="pull-right">Cat Image URL:</label>
                                     </div>
                                     <div class="col-xs-9">
-                                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this.files,1)">
+                                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this,1)">
                                         <div class="bootstrap-filestyle input-group">
-                                            <input type="text" class="form-control file-upload" placeholder="Image" name="imageUrl" ng-model="catCtrl.catObj.src" required> <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                            <label for="filestyle-3" class="btn btn-primary">
-                                                <span class="glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span>
-                                            </label>
+                                            <input type="text" class="form-control file-upload" placeholder="Image" name="imageUrl" ng-model="catCtrl.catObj.src" disabled=disabled required> 
+                                            <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                                <label for="filestyle-3" class="btn btn-primary">
+                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                    <span class="buttonText">Choose file</span>
+                                                </label>
                                             </span>
                                         </div>
+                                        <img src="{{catCtrl.catObj.absolutePath}}" ng-if="catCtrl.catObj.absolutePath" class="img-responsive img-dimensions"/>
                                         <p ng-show="myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer"> 
-                            <button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid || catCtrl.isDuplicate" ng-click="catCtrl.editCatDetails(catCtrl.catObj)" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid || catCtrl.isDuplicate" ng-click="catCtrl.updateCatDetails(catCtrl.catObj)" data-dismiss="modal">Save</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
                 </div>

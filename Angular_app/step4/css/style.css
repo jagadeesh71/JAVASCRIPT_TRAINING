@@ -1,5 +1,5 @@
 body {
-    background-color: #FFF;
+    background-color: #ebeef0;
 }
 .float-left {
     float: left;
@@ -82,4 +82,13 @@ input[type=file] {
 
 .glyphicon-edit {
     cursor: pointer;
+}
+
+.img-dimensions {
+    margin-top: 10px;
+    width: 46%;
+}
+
+img {
+    border: 1px solid;
 }

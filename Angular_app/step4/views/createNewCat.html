@@ -1,6 +1,6 @@
     <a href="#/">Back</a>
     <div class="panel panel-default panel-dimentions" ng-controller="createCatController as createCtrl">
-        <div class="panel-heading">Add New Cat</div>
+        <div class="panel-heading"><b>ADD NEW CAT</b></div>
         <div class="panel-body">
             <form name="myForm">
                 <div class="row" ng-class="{ 'has-error' : (myForm.catName.$invalid && !myForm.catName.$pristine) || createCtrl.isDuplicate }">
@@ -28,13 +28,17 @@
                         <label class="pull-right">Cat Image URL:</label>
                     </div>
                     <div class="col-xs-9">
-                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this.files,1)">
+                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this,1)">
                         <div class="bootstrap-filestyle input-group">
-                            <input type="text" class="form-control file-upload" placeholder="Image" name="imageUrl" ng-model="createCtrl.catObj.src" required> <span class="group-span-filestyle input-group-btn" tabindex="0">
-                    <label for="filestyle-3" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-folder-open"></span> <span class="buttonText">Choose file</span> </label>
+                            <input type="text" class="form-control file-upload" disabled=disabled placeholder="Image" name="imageUrl" ng-model="createCtrl.catObj.src" required> 
+                            <span class="group-span-filestyle input-group-btn" tabindex="0">
+                                <label for="filestyle-3" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-folder-open"></span> 
+                                    <span class="buttonText">Choose file</span> 
+                                </label>
                             </span>
                         </div>
+                        <img src={{createCtrl.catObj.absolutePath}} ng-if="createCtrl.catObj.absolutePath" class="img-responsive img-dimensions"/>
                         <p ng-show="myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
                     </div>
                 </div>

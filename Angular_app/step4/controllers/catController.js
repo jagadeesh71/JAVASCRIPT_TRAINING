@@ -1,7 +1,7 @@
 (function () {
     angular.module('catClicker').controller('catController', catController);
     catController.$inject = ['myFactoryService', '$scope'];
-    function catController(facService, scope, cookies) {
+    function catController(facService, scope, $cookies) {
         var vm = this;
         vm.isDuplicate = false;
         
@@ -27,6 +27,24 @@
             catReference.clickCount++;
         }
         
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    vm.catObj.absolutePath =  e.target.result;
+                    scope.$apply();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        scope.setFile = function (input, type) {
+            vm.catObj.src = input.files[0].name;
+            readURL(input);
+            scope.$apply();
+        }
+        
         vm.loadCatDetails = function (data) {
             vm.catObj = {
                 name: data.name,
@@ -35,7 +53,8 @@
                 id: data.id,
                 votes: data.votes,
                 clickCount: data.clickCount,
-                isClicked: data.isClicked
+                isClicked: data.isClicked,
+                absolutePath: data.absolutePath
             };
             $('#editCatDetails').modal('toggle');
         }
@@ -43,22 +62,18 @@
         vm.duplicateNameExists = function (data) {
             var result;
             result = vm.catList.filter(function (cat) {
-                return cat.name === data.name && cat.id != data.id;
+                return cat.name.toLowerCase() === data.name && data.name.toLowerCase() && cat.id != data.id;
             });
             vm.isDuplicate = (result.length !== 0);
         }
         
-        vm.editCatDetails = function(data) {
-            if (data.src.indexOf('http') == -1 && data.src.indexOf('/images') == -1) {   
-                //only supporting online urls or local images in the images folder
-                data.src = './images/' + data.src;
-            }
-
+        vm.updateCatDetails = function(data) {
             vm.catList.forEach( function(cat) {
                 if (cat.id == data.id) {
                     cat.name = data.name;
                     cat.description = data.description;
                     cat.src = data.src;
+                    cat.absolutePath = data.absolutePath;
                 }
             });
             facService.setData(vm.catList);
@@ -70,11 +85,15 @@
                 return cat.id === catData.id;
             });
             vm.catList.splice(index,1);
+            facService.setData(vm.catList);
             if (vm.catList.length) {
                vm.getFirstCatDetails(vm.catList[0]); 
             }
         }
-        
+       
+        vm.upVote = function() {
+            
+        }
     }
     
 })();

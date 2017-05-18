@@ -1,5 +1,5 @@
 (function() {
-    angular.module('catClicker',['ngRoute']).config(configuration);
+    angular.module('catClicker').config(configuration);
             
     function configuration($routeProvider){
         $routeProvider
@@ -10,4 +10,5 @@
             templateUrl: './views/createNewCat.html'
         });
     }
+    
 })();

@@ -1,3 +1,3 @@
 (function (angular) {
-    angular.module('catClicker', ['ngCookies']);
+    angular.module('catClicker', ['ngCookies', 'ngRoute']);
 })(angular);

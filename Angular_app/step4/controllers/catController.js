@@ -1,6 +1,6 @@
 (function () {
     angular.module('catClicker').controller('catController', catController);
-    catController.$inject = ['myFactoryService', '$scope'];
+    catController.$inject = ['myFactoryService', '$scope', '$cookies'];
     function catController(facService, scope, $cookies) {
         var vm = this;
         vm.isDuplicate = false;
@@ -8,13 +8,13 @@
         var loadCatsData = function () {
             facService.getCatList().then(function (result) {
                 vm.catList = result;
-                vm.getFirstCatDetails(vm.catList[0]);
+                vm.getCatDetails(vm.catList[0]);
             });
         };
         
         loadCatsData();
         
-        vm.getFirstCatDetails = function (catData) {
+        vm.getCatDetails = function (catData) {
             vm.catData = [];
             vm.catData = vm.catList.filter(function (cat) {
                 return cat.id === catData.id ;
@@ -77,7 +77,7 @@
                 }
             });
             facService.setData(vm.catList);
-            vm.getFirstCatDetails(data);
+            vm.getCatDetails(data);
         }
         
         vm.deleteCat = function(catData) {
@@ -87,13 +87,9 @@
             vm.catList.splice(index,1);
             facService.setData(vm.catList);
             if (vm.catList.length) {
-               vm.getFirstCatDetails(vm.catList[0]); 
+               vm.getCatDetails(vm.catList[0]); 
             }
-        }
-       
-        vm.upVote = function() {
-            
-        }
+        }  
     }
     
 })();

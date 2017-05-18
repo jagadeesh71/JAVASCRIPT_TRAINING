@@ -23,7 +23,7 @@
                 </div>
                 <div ng-repeat="cat in catCtrl.catList | myCustomFilter:searchedName | orderBy:sort"> 
                     <span class="glyphicon glyphicon-chevron-right"></span> 
-                    <a ng-click="catCtrl.getFirstCatDetails(cat)" ng-model="name" ng-class="{active_anchor: (cat.id == catCtrl.selectedCat)}">
+                    <a ng-click="catCtrl.getCatDetails(cat)" ng-model="name" ng-class="{active_anchor: (cat.id == catCtrl.selectedCat)}">
                         {{cat.name}}
                     </a> 
                     <span ng-if="cat.isClicked">&#10004;</span> 
@@ -51,7 +51,7 @@
                             <label>No of clicks: </label> <span ng-bind="catCtrl.catData.clickCount"></span> </div>
                         <div class="row margin-left-2 margin-top-1">
                             <label>Votes:</label>
-                            <input type="number" ng-model="catCtrl.catData.votes" ng-change="catCtrl.upVote()"/> </div>
+                            <input type="number" ng-model="catCtrl.catData.votes" validate-upvote="catCtrl.catData" /> </div>
                     </div>
                 </div>
             </div>

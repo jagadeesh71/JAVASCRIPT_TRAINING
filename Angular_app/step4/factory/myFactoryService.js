@@ -35,4 +35,26 @@
             getCatList: getCatList
         };
     }
+
+
+    angular.module('catClicker').factory('upVoteService', upVoteService);
+    
+    upVoteService.$inject = ['$q','$http'];
+    function upVoteService(q, http) {
+        
+        var upVoteService = {};
+        
+        function getUpvoted (catId) {
+            return upVoteService[catId];
+        }
+
+        function setUpvoted(catId, value) {
+            upVoteService[catId] = value;
+        }
+
+        return {
+            getUpvoted: getUpvoted,
+            setUpvoted: setUpvoted
+        };
+    }
 })();

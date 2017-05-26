@@ -12,5 +12,8 @@
     "http-server": "^0.6.1",
     "bootstrap": "3.3.7",
     "jquery": "1.12.4"
+  },
+  "dependencies": {
+    "angular-ui-router": "^1.0.3"
   }
 }

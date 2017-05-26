@@ -14,31 +14,12 @@
             vm.catObj = {
                 name: '',
                 description: '',
-                src: '',
-                absolutePath: ''
+                src: ''
             };
         }
         
         vm.initializeCatObject();
-        
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    vm.catObj.absolutePath =  e.target.result;
-                    scope.$apply();
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        
-        scope.setFile = function (input, type) {
-            vm.catObj.src = input.files[0].name;
-            readURL(input);
-            scope.$apply();
-        }
-        
+                
         vm.saveCatDetails = function(data) {
             idTracker = vm.catsList[vm.catsList.length - 1].id;
             data.votes = 0;
@@ -59,6 +40,10 @@
                 return cat.name.toLowerCase() === data.name && data.name.toLowerCase();
             });
             vm.isDuplicate = (result.length !== 0);
+        }
+        
+        vm.isValidUrl = function(data) {
+            console.log(data);
         }
     }
 })();

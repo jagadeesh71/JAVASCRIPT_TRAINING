@@ -35,26 +35,28 @@
             getCatList: getCatList
         };
     }
-
-
-    angular.module('catClicker').factory('upVoteService', upVoteService);
     
-    upVoteService.$inject = ['$q','$http'];
-    function upVoteService(q, http) {
+    angular.module('catClicker').factory('imageUrlCheckService', imageUrlCheckService);
+    imageUrlCheckService.$inject = ['$q'];
+    
+    function imageUrlCheckService(q) {
         
-        var upVoteService = {};
+        function isValidUrl(imgSrc) {
+            var defer = q.defer();
+            var img = new Image();
+            img.src = imgSrc;
+            img.onload = function() {
+                defer.resolve(true);
+            };
+            img.onerror = function() { 
+                defer.resolve(false);
+             };
+            return defer.promise;
+        }
         
-        function getUpvoted (catId) {
-            return upVoteService[catId];
-        }
-
-        function setUpvoted(catId, value) {
-            upVoteService[catId] = value;
-        }
-
         return {
-            getUpvoted: getUpvoted,
-            setUpvoted: setUpvoted
-        };
+            isValidUrl: isValidUrl
+        }
     }
+    
 })();

@@ -1,5 +1,5 @@
-    <a href="#/">Back</a>
-    <div class="panel panel-default panel-dimentions" ng-controller="createCatController as createCtrl">
+    <a ui-sref="catList"><button class="btn btn-primary">Back</button></a>
+    <div class="panel panel-default panel-dimentions">
         <div class="panel-heading"><b>ADD NEW CAT</b></div>
         <div class="panel-body">
             <form name="myForm">
@@ -23,29 +23,21 @@
                         <p ng-show="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
                     </div>
                 </div>
-                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine }">
+                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.imageUrl.$error.urlValidation && !myForm.imageUrl.$pristine }">
                     <div class="col-xs-3">
                         <label class="pull-right">Cat Image URL:</label>
                     </div>
                     <div class="col-xs-9">
-                        <input type="file" file-model="imageFile" class="filestyle" data-buttonname="btn-primary" id="filestyle-3" tabindex="-1" onchange="angular.element(this).scope().setFile(this,1)">
-                        <div class="bootstrap-filestyle input-group">
-                            <input type="text" class="form-control file-upload" disabled=disabled placeholder="Image" name="imageUrl" ng-model="createCtrl.catObj.src" required> 
-                            <span class="group-span-filestyle input-group-btn" tabindex="0">
-                                <label for="filestyle-3" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-folder-open"></span> 
-                                    <span class="buttonText">Choose file</span> 
-                                </label>
-                            </span>
-                        </div>
-                        <img src={{createCtrl.catObj.absolutePath}} ng-if="createCtrl.catObj.absolutePath" class="img-responsive img-dimensions"/>
-                        <p ng-show="myForm.imageUrl.$invalid && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
+                        <input type="text" class="form-control" name="imageUrl" ng-model="createCtrl.catObj.src" ng-model-options="{allowInvalid: true, updateOn: 'blur'}" check-validity="createCtrl.catObj">
+                        <img src={{createCtrl.catObj.src}} ng-if="createCtrl.catObj.src && !myForm.imageUrl.$error.urlValidation" class="img-responsive img-dimensions"/>
+                        <p class="help-block" ng-show="createCtrl.catObj.src && myForm.imageUrl.$error.urlValidation">Please enter a valid URL</p>
+                        <p ng-show="!createCtrl.catObj.src && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
                     </div>
                 </div>
             </form>
             <div class="footer-css">
-                <button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid || createCtrl.isDuplicate" ng-click="createCtrl.saveCatDetails(createCtrl.catObj)">Save</button>
-                <button type="button" class="btn btn-default">Reset</button>
+                <input type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || createCtrl.isDuplicate" ng-click="createCtrl.saveCatDetails(createCtrl.catObj)" value="Save">
+                <a ui-sref="catList"><button type="button" class="btn btn-default">Cancel</button></a>
             </div>
         </div>
     </div>

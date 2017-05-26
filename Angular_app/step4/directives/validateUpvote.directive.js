@@ -26,11 +26,38 @@
                         catObject.votes = parseInt(parentCtrl.$viewValue, 10);
                         facService.setData(scope.$parent.catCtrl.catList);
                         $cookies.put(cat.id, parseInt(parentCtrl.$viewValue,10));
+                        parentCtrl.$render();
                     }
                 }
                 parentCtrl.$parsers.push(myValidation);
             }
         }
     }
+    
+    
+    checkValidity.$inject = ['imageUrlCheckService', '$q'];
+
+    angular.module('catClicker').directive('checkValidity', checkValidity);
+    
+    function checkValidity (urlCheckService, q) {
+        return {
+          restrict: 'A',
+          require: 'ngModel',
+          link: function (scope, elem, attr, ctrl) {
+              
+              var cat = scope.$eval(attr.checkValidity);
+
+              ctrl.$asyncValidators.urlValidation = function () {
+                  return urlCheckService.isValidUrl(cat.src).then(function(isValid) {
+                      if (!isValid) {
+                          return q.reject();
+                      }
+                      return true;
+                  });
+              }
+          }
+       }
+    }
+    
 
 })();

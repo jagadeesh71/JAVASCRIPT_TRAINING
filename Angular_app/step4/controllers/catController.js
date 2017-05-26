@@ -1,6 +1,7 @@
 (function () {
     angular.module('catClicker').controller('catController', catController);
     catController.$inject = ['myFactoryService', '$scope', '$cookies'];
+    
     function catController(facService, scope, $cookies) {
         var vm = this;
         vm.isDuplicate = false;
@@ -26,25 +27,7 @@
         vm.incrementCount = function (catReference) {
             catReference.clickCount++;
         }
-        
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    vm.catObj.absolutePath =  e.target.result;
-                    scope.$apply();
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        
-        scope.setFile = function (input, type) {
-            vm.catObj.src = input.files[0].name;
-            readURL(input);
-            scope.$apply();
-        }
-        
+                
         vm.loadCatDetails = function (data) {
             vm.catObj = {
                 name: data.name,
@@ -54,7 +37,6 @@
                 votes: data.votes,
                 clickCount: data.clickCount,
                 isClicked: data.isClicked,
-                absolutePath: data.absolutePath
             };
             $('#editCatDetails').modal('toggle');
         }
@@ -73,7 +55,6 @@
                     cat.name = data.name;
                     cat.description = data.description;
                     cat.src = data.src;
-                    cat.absolutePath = data.absolutePath;
                 }
             });
             facService.setData(vm.catList);
@@ -89,7 +70,7 @@
             if (vm.catList.length) {
                vm.getCatDetails(vm.catList[0]); 
             }
-        }  
+        }
     }
     
 })();

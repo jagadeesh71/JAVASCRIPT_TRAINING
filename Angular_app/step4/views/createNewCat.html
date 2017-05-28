@@ -1,6 +1,6 @@
-    <a ui-sref="catList"><button class="btn btn-primary">Back</button></a>
-    <div class="panel panel-default panel-dimentions">
-        <div class="panel-heading"><b>ADD NEW CAT</b></div>
+    <a ui-sref="catList"><button class="btn button-css">Back</button></a>
+    <div class="panel panel-dimentions">
+        <div class="panel-heading add-panel-css"><b>ADD NEW CAT</b></div>
         <div class="panel-body">
             <form name="myForm">
                 <div class="row" ng-class="{ 'has-error' : (myForm.catName.$invalid && !myForm.catName.$pristine) || createCtrl.isDuplicate }">
@@ -9,8 +9,8 @@
                     </div>
                     <div class="col-xs-9">
                         <input type="text" placeholder="Enter cat name" name="catName" ng-model="createCtrl.catObj.name" ng-change="createCtrl.duplicateNameExists(createCtrl.catObj)" class="form-control" required>
-                        <p ng-show="myForm.catName.$invalid && !myForm.catName.$pristine" class="help-block">Cat name is required.</p>
-                        <p ng-show="createCtrl.isDuplicate" class="help-block">Cat name already exists.</p>
+                        <p ng-if="myForm.catName.$invalid && !myForm.catName.$pristine" class="help-block">Cat name is required.</p>
+                        <p ng-if="createCtrl.isDuplicate" class="help-block">Cat name already exists.</p>
                     </div>
                 </div>
                 <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.description.$invalid && !myForm.description.$pristine }">
@@ -19,24 +19,24 @@
                     </div>
                     <div class="col-xs-9">
                         <textarea type="text" placeholder="Enter cat description" name="description" ng-model="createCtrl.catObj.description" class="form-control" ng-minlength="3" ng-maxlength="180"></textarea>
-                        <p ng-show="myForm.description.$error.minlength" class="help-block">Description is too short.</p>
-                        <p ng-show="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
+                        <p ng-if="myForm.description.$error.minlength" class="help-block">Description is too short.</p>
+                        <p ng-if="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
                     </div>
                 </div>
-                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.imageUrl.$error.urlValidation && !myForm.imageUrl.$pristine }">
+                <div class="row margin-top-2" ng-class="{ 'has-error' : (myForm.imageUrl.$error.urlValidation || myForm.imageUrl.$error.required) && !myForm.imageUrl.$pristine }">
                     <div class="col-xs-3">
                         <label class="pull-right">Cat Image URL:</label>
                     </div>
                     <div class="col-xs-9">
-                        <input type="text" class="form-control" name="imageUrl" ng-model="createCtrl.catObj.src" ng-model-options="{allowInvalid: true, updateOn: 'blur'}" check-validity="createCtrl.catObj">
+                        <input type="text" class="form-control" name="imageUrl" ng-model="createCtrl.catObj.src" ng-model-options="{allowInvalid: true, updateOn: 'blur'}" check-validity="createCtrl.catObj" placeholder="Enter cat url" required>
                         <img src={{createCtrl.catObj.src}} ng-if="createCtrl.catObj.src && !myForm.imageUrl.$error.urlValidation" class="img-responsive img-dimensions"/>
-                        <p class="help-block" ng-show="createCtrl.catObj.src && myForm.imageUrl.$error.urlValidation">Please enter a valid URL</p>
-                        <p ng-show="!createCtrl.catObj.src && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
+                        <p class="help-block" ng-if="createCtrl.catObj.src && myForm.imageUrl.$error.urlValidation">Please enter a valid URL</p>
+                        <p ng-if="myForm.imageUrl.$error.required && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
                     </div>
                 </div>
             </form>
             <div class="footer-css">
-                <input type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || createCtrl.isDuplicate" ng-click="createCtrl.saveCatDetails(createCtrl.catObj)" value="Save">
+                <input type="submit" class="btn button-css" ng-disabled="myForm.$invalid || createCtrl.isDuplicate" ng-click="createCtrl.saveCatDetails(createCtrl.catObj)" value="Save">
                 <a ui-sref="catList"><button type="button" class="btn btn-default">Cancel</button></a>
             </div>
         </div>

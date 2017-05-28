@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-3">
         <div class="margin-bottom-2">
-            <input type="text" placeholder="search" ng-model="searchedName" class="form-control input-dimentions"> <button class="search-button-css btn" ng-click="catCtrl.inputSearchValue = searchedName">Search</button>
+            <input type="text" placeholder="search" ng-model="searchedName" class="form-control input-dimentions"> <button class="button-css btn" ng-click="catCtrl.inputSearchValue = searchedName">Search</button>
         </div>
         <div class="margin-bottom-2">
             <select ng-model="sort" class="width-height form-control">
@@ -14,34 +14,34 @@
             <div class="col-xs-6">
                 <label>Cat List</label>
             </div>
-            <div class="col-xs-6"> 
+            <div class="col-xs-6">
                 <a ui-sref="newCat" class="pull-right">
                     <span class="glyphicon glyphicon-plus"></span>
-                </a> 
+                </a>
             </div>
         </div>
-        <div ng-repeat="cat in catCtrl.catList | myCustomFilter:catCtrl.inputSearchValue | orderBy:sort"> 
-            <span class="glyphicon glyphicon-chevron-right"></span> 
+        <div ng-repeat="cat in catCtrl.catList | myCustomFilter:catCtrl.inputSearchValue | orderBy:sort">
+            <span class="glyphicon glyphicon-chevron-right"></span>
             <a ng-click="catCtrl.getCatDetails(cat)" ng-model="name" ng-class="{active_anchor: (cat.id == catCtrl.selectedCat)}">
                 {{cat.name}}
-            </a> 
-            <span ng-if="cat.isClicked">&#10004;</span> 
+            </a>
+            <span ng-if="cat.isClicked" style="color: white">&#10004;</span>
             <a class="pull-right" ng-click="catCtrl.loadCatDetails(cat)">
                 <span class="glyphicon glyphicon-edit"></span>
-            </a> 
+            </a>
         </div>
         <div class="col-xs-9" ng-if="catCtrl.catList.length === 0">
-            <i>List is empty</i>
+            <label><i>List is empty</i></label>
         </div>
     </div>
 
-    <div class="panel panel-default col-xs-9" ng-if="catCtrl.catData && catCtrl.catList.length">
+    <div class="panel panel-default col-xs-9" ng-if="catCtrl.catData && catCtrl.catList.length && !catCtrl.editflag">
         <div class="panel-body">
             <div class="row">
                 <a class="pull-right" ng-click="catCtrl.deleteCat(catCtrl.catData)"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
-            <div class="col-xs-4"> 
-                <img ng-src={{catCtrl.catData.src}} class="img-responsive" ng-click="catCtrl.incrementCount(catCtrl.catData)" /> 
+            <div class="col-xs-4">
+                <img ng-src={{catCtrl.catData.src}} class="img-responsive" ng-click="catCtrl.incrementCount(catCtrl.catData)" />
             </div>
             <div class="col-xs-8">
                 <div class="row margin-left-2 margin-top-1">
@@ -56,56 +56,52 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="editCatDetails" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Edit Cat details</h4> </div>
-                <div class="modal-body">
-                    <form name="myForm">
-
-                        <div class="row" ng-class="{ 'has-error' : (myForm.catName.$invalid && !myForm.catName.$pristine) || catCtrl.isDuplicate }">
-                            <div class="col-xs-3">
-                                <label class="pull-right">Cat Name:</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <input type="text" placeholder="Enter cat name" name="catName" ng-model="catCtrl.catObj.name" ng-change="catCtrl.duplicateNameExists(catCtrl.catObj)" class="form-control" required>
-                                <p ng-show="myForm.catName.$invalid && !myForm.catName.$pristine" class="help-block">Cat name is required.</p>
-                                <p ng-show="catCtrl.isDuplicate" class="help-block">Cat name already exists.</p>
-                            </div>
-                       </div>
-
-                        <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.description.$invalid && !myForm.description.$pristine }">
-                            <div class="col-xs-3">
-                                <label class="pull-right">Cat Description:</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <textarea type="text" placeholder="Enter cat description" name="description" ng-model="catCtrl.catObj.description" class="form-control" ng-minlength="3" ng-maxlength="180"></textarea>
-                                <p ng-show="myForm.description.$error.minlength" class="help-block">Description is too short.</p>
-                                <p ng-show="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.imageUrl.$error.urlValidation && !myForm.imageUrl.$pristine }">
-                            <div class="col-xs-3">
-                                <label class="pull-right">Cat Image URL:</label>
-                            </div>
-                            <div class="col-xs-9">
-                                <input type="text" class="form-control" name="imageUrl" ng-model="catCtrl.catObj.src" ng-model-options="{allowInvalid: true, updateOn: 'blur'}" check-validity="catCtrl.catObj">
-                                <img src={{catCtrl.catObj.src}} ng-if="catCtrl.catObj.src && !myForm.imageUrl.$error.urlValidation" class="img-responsive img-dimensions"/>
-                                <p class="help-block" ng-show="catCtrl.catObj.src && myForm.imageUrl.$error.urlValidation">Please enter a valid URL</p>
-                                <p ng-show="!catCtrl.catObj.src && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
-                            </div>
-                        </div>
-                    </form>
+    
+    
+    <div class="panel col-xs-9" ng-if="catCtrl.editflag">
+        <div class="panel-heading edit-panel-css"><b>EDIT CAT DETAILS</b></div>
+        <div class="panel-body">
+            <form name="myForm">
+                <div class="row" ng-class="{ 'has-error' : (myForm.catName.$invalid && !myForm.catName.$pristine) || catCtrl.isDuplicate }">
+                    <div class="col-xs-3">
+                        <label class="pull-right">Cat Name:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <input type="text" placeholder="Enter cat name" name="catName" ng-model="catCtrl.catObj.name" ng-change="catCtrl.duplicateNameExists(catCtrl.catObj)" class="form-control" required>
+                        <p ng-if="myForm.catName.$invalid && !myForm.catName.$pristine" class="help-block">Cat name is required.</p>
+                        <p ng-if="catCtrl.isDuplicate" class="help-block">Cat name already exists.</p>
+                    </div>
                 </div>
-                <div class="modal-footer"> 
-                    <button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid || catCtrl.isDuplicate" ng-click="catCtrl.updateCatDetails(catCtrl.catObj)" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <div class="row margin-top-2" ng-class="{ 'has-error' : myForm.description.$invalid && !myForm.description.$pristine }">
+                    <div class="col-xs-3">
+                        <label class="pull-right">Cat Description:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <textarea type="text" placeholder="Enter cat description" name="description" ng-model="catCtrl.catObj.description" class="form-control" ng-minlength="3" ng-maxlength="180"></textarea>
+                        <p ng-if="myForm.description.$error.minlength" class="help-block">Description is too short.</p>
+                        <p ng-if="myForm.description.$error.maxlength" class="help-block">Description is too large.</p>
+                    </div>
                 </div>
+                <div class="row margin-top-2" ng-class="{ 'has-error' : (myForm.imageUrl.$error.urlValidation || myForm.imageUrl.$error.required) && !myForm.imageUrl.$pristine }">
+                    <div class="col-xs-3">
+                        <label class="pull-right">Cat Image URL:</label>
+                    </div>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" name="imageUrl" ng-model="catCtrl.catObj.src" ng-model-options="{allowInvalid: true, updateOn: 'blur'}" check-validity="catCtrl.catObj" placeholder="Enter cat url" required>
+                        <img src={{catCtrl.catObj.src}} ng-if="catCtrl.catObj.src && !myForm.imageUrl.$error.urlValidation" class="img-responsive img-dimensions"/>
+                        <p class="help-block" ng-if="catCtrl.catObj.src && myForm.imageUrl.$error.urlValidation">Please enter a valid URL</p>
+                        <p ng-if="myForm.imageUrl.$error.required && !myForm.imageUrl.$pristine" class="help-block">Cat Image URL is required.</p>
+                    </div>
+                </div>
+            </form>
+            <div class="footer-css">
+                <input type="submit" class="btn button-css" ng-disabled="myForm.$invalid || catCtrl.isDuplicate" ng-click="catCtrl.updateCatDetails(catCtrl.catObj)" value="Update">
+                <button type="button" class="btn btn-default" ng-click="catCtrl.cancelEdit(catCtrl.catObj)">Cancel</button>
+            </div>
         </div>
-    </div>  
+    </div>
+    
+    
+    
+    
 </div>

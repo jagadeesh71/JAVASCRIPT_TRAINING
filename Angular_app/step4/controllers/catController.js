@@ -4,6 +4,7 @@
     
     function catController(facService, scope, $cookies) {
         var vm = this;
+        vm.editflag = false;
         vm.isDuplicate = false;
         
         var loadCatsData = function () {
@@ -22,6 +23,7 @@
             })[0];
             vm.catData.isClicked = true;
             vm.selectedCat = vm.catData.id;
+            vm.editflag = false;
         }
         
         vm.incrementCount = function (catReference) {
@@ -38,13 +40,14 @@
                 clickCount: data.clickCount,
                 isClicked: data.isClicked,
             };
-            $('#editCatDetails').modal('toggle');
+            vm.selectedCat = data.id;
+            vm.editflag = true;
         }
         
         vm.duplicateNameExists = function (data) {
             var result;
             result = vm.catList.filter(function (cat) {
-                return cat.name.toLowerCase() === data.name && data.name.toLowerCase() && cat.id != data.id;
+                return data.name && cat.name.toLowerCase() === data.name.toLowerCase() && cat.id != data.id;
             });
             vm.isDuplicate = (result.length !== 0);
         }
@@ -70,6 +73,11 @@
             if (vm.catList.length) {
                vm.getCatDetails(vm.catList[0]); 
             }
+        }
+        
+        vm.cancelEdit = function (data) {
+            vm.editflag = false;
+            vm.getCatDetails(data);
         }
     }
     

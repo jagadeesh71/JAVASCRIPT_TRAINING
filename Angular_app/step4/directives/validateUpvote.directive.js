@@ -44,10 +44,8 @@
           restrict: 'A',
           require: 'ngModel',
           link: function (scope, elem, attr, ctrl) {
-              
-              var cat = scope.$eval(attr.checkValidity);
-
               ctrl.$asyncValidators.urlValidation = function () {
+                  cat = scope.$eval(attr.checkValidity);
                   return urlCheckService.isValidUrl(cat.src).then(function(isValid) {
                       if (!isValid) {
                           return q.reject();
